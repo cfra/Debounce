@@ -30,6 +30,11 @@
 
 class Debounce;
 
+enum DebounceEdgeType {
+	RisingEdge,
+	FallingEdge
+};
+
 class PinDebouncer
 {
 	friend class Debounce;
@@ -46,6 +51,13 @@ public:
 	 * @return -1 if pin has not been stable yet, 0 or 1 otherwise.
 	 */
 	char read();
+
+	/**
+	 * Sets a callback to call when input state changes.
+	 * @param cb Function to call. The function has one parameter which describes
+	 * the direction of the edge.
+	 */
+	void setHandler(void (*cb)(enum DebounceEdgeType));
 private:
 	/**
 	 * Samples the pin state and updates internal state accordingly.
@@ -58,6 +70,7 @@ private:
 	char debouncedState; /* The state after debounce */
 	char lastPinState; /* The last state of the pin */
 	uint16_t stateDur; /* The time for which the pin has been stable */
+	void (*edgeHandler)(enum DebounceEdgeType); /* Callback for changes */
 };
 
 #endif

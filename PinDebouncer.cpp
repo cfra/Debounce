@@ -32,6 +32,7 @@ PinDebouncer::PinDebouncer(int pin, uint16_t ms)
 	, debouncedState(-1)
 	, lastPinState(-1)
 	, stateDur(0)
+	, edgeHandler(NULL)
 {
 	Debounce::instance().registerPin(this);
 }
@@ -39,6 +40,11 @@ PinDebouncer::PinDebouncer(int pin, uint16_t ms)
 char PinDebouncer::read()
 {
 	return debouncedState;
+}
+
+void PinDebouncer::setHandler(void (*cb)(enum DebounceEdgeType))
+{
+	edgeHandler = cb;
 }
 
 void PinDebouncer::update()
@@ -52,6 +58,14 @@ void PinDebouncer::update()
 		if (stateDur < wantedDur) {
 			stateDur++;
 		} else {
+			if (currentState != debouncedState
+			    && edgeHandler != NULL) {
+				if (currentState == 0) {
+					edgeHandler(FallingEdge);
+				} else {
+					edgeHandler(RisingEdge);
+				}
+			}
 			debouncedState = currentState;
 		}
 	}

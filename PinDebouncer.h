@@ -25,6 +25,7 @@
 #ifndef PinDebouncer_h
 #define PinDebouncer_h
 
+#include "Arduino.h"
 #include <inttypes.h>
 
 class Debounce;

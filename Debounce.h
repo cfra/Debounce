@@ -25,6 +25,8 @@
 #ifndef Debounce_h
 #define Debounce_h
 
+#include "Arduino.h"
+
 class PinDebouncer;
 
 class Debounce
@@ -46,7 +48,6 @@ private:
 	void doStart();
 	void registerPin(PinDebouncer *db);
 
-	static Debounce *self;
 	bool doRun;
 	unsigned int pinListLen;
 	unsigned int pinCount;
@@ -54,4 +55,3 @@ private:
 };
 
 #endif
-

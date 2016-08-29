@@ -25,6 +25,8 @@
 #include "Debounce.h"
 #include "PinDebouncer.h"
 
+static Debounce *debounceSingleton = NULL;
+
 #ifndef NO_DEBOUNCE_TIMER
 /* This function gets called every 1ms from timer1 */
 ISR(TIMER1_OVF_vect)
@@ -35,10 +37,10 @@ ISR(TIMER1_OVF_vect)
 
 Debounce &Debounce::instance()
 {
-	if (!self) {
-		self = new Debounce();
+	if (!debounceSingleton) {
+		debounceSingleton = new Debounce();
 	}
-	return *self;
+	return *debounceSingleton;
 }
 
 void Debounce::update()
@@ -89,7 +91,7 @@ void Debounce::registerPin(PinDebouncer *db)
 
 Debounce::Debounce()
 	: doRun(false)
-	, pinListLen(0),
+	, pinListLen(0)
 	, pinCount(0)
 {
 #ifndef NO_DEBOUNCE_TIMER

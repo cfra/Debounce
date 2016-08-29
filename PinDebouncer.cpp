@@ -23,22 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include "Debouncer.h"
+#include "PinDebouncer.h"
+#include "Debounce.h"
 
-Debouncer::Debouncer(int pin, uint16_t ms)
+PinDebouncer::PinDebouncer(int pin, uint16_t ms)
 	: pin(pin)
 	, wanted_dur(ms)
 	, debounced_state(-1)
 	, last_pin_state(-1)
 	, state_dur(0)
-{}
+{
+	Debounce::instance().register_pin(this);
+}
 
-char Debouncer::read()
+char PinDebouncer::read()
 {
 	return debounced_state;
 }
 
-void Debouncer::update()
+void PinDebouncer::update()
 {
 	char current_state = 0; /* TODO: DigitalRead */
 

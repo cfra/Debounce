@@ -22,20 +22,23 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef Debouncer_h
-#define Debouncer_h
+#ifndef PinDebouncer_h
+#define PinDebouncer_h
 
 #include <inttypes.h>
 
-class Debouncer
+class Debounce;
+
+class PinDebouncer
 {
+	friend class Debounce;
 public:
 	/**
-	 * Creates a new Debouncer for a pin.
+	 * Creates a new PinDebouncer for a pin.
 	 * @param pin The input pin for which the debounce should be created.
 	 * @param ms The time for which the pin needs to be stable to change state
 	 */
-	Debouncer(int pin, uint16_t ms);
+	PinDebouncer(int pin, uint16_t ms);
 
 	/**
 	 * Returns the curent state of the pin associated with the debouncer.

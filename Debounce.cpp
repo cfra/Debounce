@@ -46,11 +46,24 @@ void Debounce::update()
 	Debounce::instance().doUpdate();
 }
 
+void Debounce::start()
+{
+	Debounce::instance().doStart();
+}
+
 void Debounce::doUpdate()
 {
+	if (!doRun)
+		return;
+
 	for (unsigned char i = 0; i < pinCount; i++) {
 		pinList[i]->update();
 	}
+}
+
+void Debounce::doStart()
+{
+	doRun = true;
 }
 
 void Debounce::registerPin(PinDebouncer *db)
@@ -75,6 +88,9 @@ void Debounce::registerPin(PinDebouncer *db)
 }
 
 Debounce::Debounce()
+	: doRun(false)
+	, pinListLen(0),
+	, pinCount(0)
 {
 #ifndef NO_DEBOUNCE_TIMER
 	/* Calculate time for 1ms - CS11 equals prescaler of 8, so divide

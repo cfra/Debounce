@@ -37,12 +37,17 @@ public:
 	/* Updates debounce instance */
 	static void update();
 
+	/* Starts the debouncer instance, only call after inputs have been configured */
+	static void start();
+
 private:
 	Debounce();
 	void doUpdate();
+	void doStart();
 	void registerPin(PinDebouncer *db);
 
 	static Debounce *self;
+	bool doRun;
 	unsigned int pinListLen;
 	unsigned int pinCount;
 	PinDebouncer **pinList;

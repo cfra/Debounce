@@ -28,31 +28,31 @@
 
 PinDebouncer::PinDebouncer(int pin, uint16_t ms)
 	: pin(pin)
-	, wanted_dur(ms)
-	, debounced_state(-1)
-	, last_pin_state(-1)
-	, state_dur(0)
+	, wantedDur(ms)
+	, debouncedState(-1)
+	, lastPinState(-1)
+	, stateDur(0)
 {
-	Debounce::instance().register_pin(this);
+	Debounce::instance().registerPin(this);
 }
 
 char PinDebouncer::read()
 {
-	return debounced_state;
+	return debouncedState;
 }
 
 void PinDebouncer::update()
 {
-	char current_state = 0; /* TODO: DigitalRead */
+	char currentState = digitalRead(pin);
 
-	if (current_state != last_pin_state) {
-		last_pin_state = current_state;
-		state_dur = 0;
+	if (currentState != lastPinState) {
+		lastPinState = currentState;
+		stateDur = 0;
 	} else {
-		if (state_dur < wanted_dur) {
-			state_dur++;
+		if (stateDur < wantedDur) {
+			stateDur++;
 		} else {
-			debounced_state = current_state;
+			debouncedState = currentState;
 		}
 	}
 }

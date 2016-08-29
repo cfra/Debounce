@@ -53,10 +53,10 @@ private:
 	void update();
 
 	int pin; /* Stores the pin which we should sample */
-	uint16_t wanted_dur; /* The time the pin needs to be stable */
-	char debounced_state; /* The state after debounce */
-	char last_pin_state; /* The last state of the pin */
-	uint16_t state_dur; /* The time for which the pin has been stable */
+	uint16_t wantedDur; /* The time the pin needs to be stable */
+	char debouncedState; /* The state after debounce */
+	char lastPinState; /* The last state of the pin */
+	uint16_t stateDur; /* The time for which the pin has been stable */
 };
 
 #endif

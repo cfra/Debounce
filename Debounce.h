@@ -39,13 +39,13 @@ public:
 
 private:
 	Debounce();
-	void do_update();
-	void register_pin(PinDebouncer *db);
+	void doUpdate();
+	void registerPin(PinDebouncer *db);
 
 	static Debounce *self;
-	unsigned int pin_list_len;
-	unsigned int pin_count;
-	PinDebouncer **pin_list;
+	unsigned int pinListLen;
+	unsigned int pinCount;
+	PinDebouncer **pinList;
 };
 
 #endif

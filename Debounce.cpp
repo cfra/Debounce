@@ -43,35 +43,35 @@ Debounce &Debounce::instance()
 
 void Debounce::update()
 {
-	Debounce::instance().do_update();
+	Debounce::instance().doUpdate();
 }
 
-void Debounce::do_update()
+void Debounce::doUpdate()
 {
-	for (unsigned char i = 0; i < pin_count; i++) {
-		pin_list[i]->update();
+	for (unsigned char i = 0; i < pinCount; i++) {
+		pinList[i]->update();
 	}
 }
 
-void Debounce::register_pin(PinDebouncer *db)
+void Debounce::registerPin(PinDebouncer *db)
 {
-	if (pin_list_len == 0) {
+	if (pinListLen == 0) {
 		/* Initialize an array for 16 inputs */
-		pin_list_len = 16;
-		pin_list = new PinDebouncer* [pin_list_len];
+		pinListLen = 16;
+		pinList = new PinDebouncer* [pinListLen];
 	}
-	if (pin_count >= pin_list_len) {
+	if (pinCount >= pinListLen) {
 		/* If array is too small, double its size */
-		PinDebouncer **new_list;
-		pin_list_len = 2 * pin_list_len;
-		new_list = new PinDebouncer* [pin_list_len];
-		for (unsigned char i = 0; i < pin_count; i++) {
-			new_list[i] = pin_list[i];
+		PinDebouncer **newList;
+		pinListLen = 2 * pinListLen;
+		newList = new PinDebouncer* [pinListLen];
+		for (unsigned char i = 0; i < pinCount; i++) {
+			newList[i] = pinList[i];
 		}
-		delete [] pin_list;
-		pin_list = new_list;
+		delete [] pinList;
+		pinList = newList;
 	}
-	pin_list[pin_count++] = db;
+	pinList[pinCount++] = db;
 }
 
 Debounce::Debounce()
